@@ -14,22 +14,22 @@ image.
 
 Optional attributes are:
 
-**src**
+`src`
 
 An alternative image to use for the lightbox image.  Mostly
 so a larger image can be used for the lightbox images.
 
-**min-width** (default 640):
+`min-width` (default 640):
 
 the min width the lightbox will work.  This is so it is disabled
 for mobile where this isn't necessary.
 
-**disabled:**
+`disabled:`
 
 if any value is used, the image-lightbox will be disabled.
 
 ```html
-<image-lightbox src="a/bigger/image.jpg" min-width="300" disabled="dis
+<image-lightbox src="a/bigger/image.jpg" min-width="300" disabled="disabled">
   <img src="somewhere/over/the/rainbow.jpg">
 </image-lightbox>
 ```
