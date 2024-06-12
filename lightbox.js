@@ -46,7 +46,7 @@ customElements.define(
         height: 100dvh;
         width: 100%;
         background-color: rgba(0, 0, 0, 0.9);
-        padding: 1rem;
+        padding: 2rem;
         opacity: 0;
         transition: opacity 0.3s;
       }
