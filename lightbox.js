@@ -56,6 +56,7 @@ customElements.define(
       .lightbox-container img{
         max-height: 100%;
         margin: auto;
+        background-color: white;
       }
       .lightbox-container, .lightbox-image{
         cursor: zoom-out;
@@ -107,15 +108,15 @@ customElements.define(
         this.thumbnail_image.style.cursor = 'zoom-in'
         this.appendChild(lightbox)
 
-        // if setTimeout is not used, the transition does not fire
+        // if setTimeout is not used, the transition does not fire.
         setTimeout(() => {
-          lightbox.classList.toggle('showing')
+          lightbox.classList.add('showing')
           direction = 'open'
-        }, 1);
+        }, 10);
       })
 
       lightbox.addEventListener('click', ()=>{
-        lightbox.classList.toggle('showing')
+        lightbox.classList.remove('showing')
         direction = 'close'
       })
 
