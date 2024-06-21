@@ -141,15 +141,13 @@ customElements.define(
         }
       })
 
-      if(this.DEBUG){
+      if(this.DEBUG == 'templates'){
         try{
           console.log('Using a custom template\n\n', custom_template.outerHTML)
         }
-        catch{}
-        try{
+        catch{
           console.log('Using the default template\n\n', default_template.outerHTML)
         }
-        catch{}
         console.log('Lightbox html\n\n', lightbox.outerHTML)
       }
     }
