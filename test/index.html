@@ -1,48 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Hello, world!</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="description" content="" />
-  <link rel="icon" href="favicon.png">
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello, world!</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="description" content="" />
+    <link rel="icon" href="favicon.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
 
-<body class="m-8">
-  <div class="mb-9">
-    <image-lightbox src="image-a.jpg" disable_under="500"
-        class="block w-full h-8 border-2 border-green-400">
-      <img class="max-w-lg w-full border-4 border-pink-400" src="image-a.jpg" />
-    </image-lightbox>
-  </div>
-  <div class="mb-9">
-    <image-lightbox disabled="disabled">
-      <img class="max-w-lg w-full border-4 border-pink-400" src="image-b.jpg" />
-    </image-lightbox>
-  </div>
-  <div class="mb-9">
-    <img class="max-w-lg w-full border-4 border-pink-400" src="image-c.jpg" />
-  </div>
-  <div class="mb-9">
-    <image-lightbox>
+  <body class="m-8">
+    <div class="mb-9">
+      <image-lightbox src="image-d.jpg" disable_under="500" debug="1">
+        <div class="m-8 bg-blue-500 p-8">
+          <img class="max-w-lg w-full border-4 border-pink-400" src="image-a.jpg" />
+        </div>
+      </image-lightbox>
+    </div>
+    <div class="mb-9">
+      <image-lightbox disabled="disabled">
+        <img class="max-w-lg w-full border-4 border-pink-400" src="image-b.jpg" />
+      </image-lightbox>
+    </div>
+    <div class="mb-9">
       <img class="max-w-lg w-full border-4 border-pink-400" src="image-c.jpg" />
-    </image-lightbox>
-  </div>
-  <div class="mb-9">
-    <img class="max-w-lg w-full border-4 border-pink-400" src="image-c.jpg" />
-  </div>
-  <div class="mb-9">
-    <img class="max-w-lg w-full border-4 border-pink-400" src="image-c.jpg" />
-  </div>
-  <div class="mb-9">
-    <img class="max-w-lg w-full border-4 border-pink-400" src="image-c.jpg" />
-  </div>
-  <div class="mb-9">
-    <img class="max-w-lg w-full border-4 border-pink-400" src="image-c.jpg" />
-  </div>
+    </div>
+    <div class="mb-9">
+      <image-lightbox>
+        <img class="max-w-lg w-full border-4 border-pink-400" src="image-c.jpg" />
+      </image-lightbox>
+    </div>
+    <div class="mb-9">
+      <img class="max-w-lg w-full border-4 border-pink-400" src="image-c.jpg" />
+    </div>
+    <div class="mb-9">
+      <img class="max-w-lg w-full border-4 border-pink-400" src="image-c.jpg" />
+    </div>
+    <div class="mb-9">
+      <img class="max-w-lg w-full border-4 border-pink-400" src="image-c.jpg" />
+    </div>
+    <div class="mb-9">
+      <img class="max-w-lg w-full border-4 border-pink-400" src="image-c.jpg" />
+    </div>
 
 
-  <script src="../lightbox.js"></script>
-</body>
+
+    <template id="xlightbox-template">
+      <style>
+        *{
+          box-sizing: border-box;
+        }
+        .lightbox-container{
+          display: none;
+          place-content: center;
+          cursor: zoom-out;
+          position: fixed;
+          top: 0;
+          left: 0;
+          height: 100dvh;
+          width: 100%;
+          background-color: rgba(0, 0, 0, 0.9);
+          padding: 2rem;
+          opacity: 0;
+          transition: opacity 0.3s;
+          & img{
+            max-height: 100%;
+            max-width: 100%;
+            margin: auto;
+            background-color: white;
+          }
+        }
+        .lightbox-showing{
+          opacity: 1;
+        }
+        img{
+          border: 10px solid white;
+        }
+      </style>
+      <slot></slot>
+      <div class="lightbox-container">
+        <img class="lightbox-image">
+      </div>
+    </template>
+
+    <script src="../lightbox.js"></script>
+  </body>
 </html>

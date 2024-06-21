@@ -30,38 +30,50 @@
  *
  */
 
-customElements.define(
-  'image-lightbox',
-  class extends HTMLElement {
-    static observedAttributes = ['src', 'min-width', 'disabled']
-    min_width = 640
-
-    styles = `
-      .lightbox-container{
-        display: grid;
-        place-content: center;
-        position: fixed;
-        top: 0;
-        left: 0;
-        height: 100dvh;
-        width: 100%;
-        background-color: rgba(0, 0, 0, 0.9);
-        padding: 2rem;
-        opacity: 0;
-        transition: opacity 0.3s;
-      }
-      .showing{
-        opacity: 1;
-      }
-      .lightbox-container img{
+const default_template = document.createElement('template');
+default_template.innerHTML = `
+  <!-- lightbox template -->
+  <style>
+    *{
+      box-sizing: border-box;
+    }
+    .lightbox-container{
+      display: none;
+      place-content: center;
+      cursor: zoom-out;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100dvh;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+      padding: 2rem;
+      opacity: 0;
+      transition: opacity 0.3s;
+      & img{
         max-height: 100%;
+        max-width: 100%;
         margin: auto;
         background-color: white;
       }
-      .lightbox-container, .lightbox-image{
-        cursor: zoom-out;
-      }
-    `
+    }
+    .lightbox-showing{
+      opacity: 1;
+    }
+  </style>
+  <slot></slot>
+  <div class="lightbox-container">
+    <img class="lightbox-image">
+  </div>
+  <!-- /lightbox template -->
+`;
+
+
+customElements.define(
+  'image-lightbox',
+  class extends HTMLElement {
+    static observedAttributes = ['src', 'min-width', 'disabled', 'debug']
+    min_width = 640
 
     constructor(){
       self = super()
@@ -73,9 +85,13 @@ customElements.define(
       if(DISABLED || window.innerWidth < this.MIN_WIDTH){
         return
       }
+      const DEBUG = this.getAttribute('debug')
+      this.DEBUG = DEBUG
 
       const thumbnail_image = this.querySelector('img')
       thumbnail_image.style.cursor = 'zoom-in'
+      // set the cursor here so that disabled lightboxes don't get a
+      // zoom cursor
       this.thumbnail_image = thumbnail_image
     }
 
@@ -84,51 +100,58 @@ customElements.define(
         return
       }
 
-      // const shadow = this.attachShadow({ mode: "open" });
-      // shadow.appendChild(this.thumbnail_image)
-
+      const shadow = this.attachShadow({ mode: "open" });
+      const custom_template = document.querySelector('template#lightbox-template')
+      if(custom_template){
+        const template_content = custom_template.content
+        shadow.appendChild(template_content.cloneNode(true))
+      }
+      else{
+        shadow.appendChild(default_template.content.cloneNode(true))
+      }
+      const lightbox = shadow.querySelector('.lightbox-container')
 
       let src = this.getAttribute('src')
       if(! src){
         src = this.thumbnail_image.src
       }
-
-      const lightbox = document.createElement('div')
-      lightbox.setAttribute('class', 'lightbox-container')
-
-      const img = document.createElement('img')
-      img.setAttribute('src', src)
-      img.setAttribute('class', 'lightbox-image')
-
-      const style = document.createElement("style")
-      style.textContent = this.styles
-
-      lightbox.appendChild(style)
-      lightbox.appendChild(img)
+      const lightbox_image = lightbox.querySelector('.lightbox-image')
+      lightbox_image.src = src
 
       let direction = 'open'
 
       this.thumbnail_image.addEventListener('click', ()=>{
-        this.thumbnail_image.style.cursor = 'zoom-in'
-        this.appendChild(lightbox)
+        lightbox.style.display = 'grid'
 
         // if setTimeout is not used, the transition does not fire.
         setTimeout(() => {
-          lightbox.classList.add('showing')
+          lightbox.classList.add('lightbox-showing')
           direction = 'open'
         }, 10);
       })
 
       lightbox.addEventListener('click', ()=>{
-        lightbox.classList.remove('showing')
+        lightbox.classList.remove('lightbox-showing')
         direction = 'close'
       })
 
       lightbox.addEventListener('transitionend', ()=>{
         if(direction == 'close'){
-          lightbox.remove()
+          lightbox.style.display = 'none'
         }
       })
+
+      if(this.DEBUG){
+        try{
+          console.log('Using a custom template\n\n', custom_template.outerHTML)
+        }
+        catch{}
+        try{
+          console.log('Using the default template\n\n', default_template.outerHTML)
+        }
+        catch{}
+        console.log('Lightbox html\n\n', lightbox.outerHTML)
+      }
     }
   }
 )
