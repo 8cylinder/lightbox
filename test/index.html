@@ -11,7 +11,8 @@
 
 <body class="m-8">
   <div class="mb-9">
-    <image-lightbox src="image-a.jpg" disable_under="500">
+    <image-lightbox src="image-a.jpg" disable_under="500"
+        class="block w-full h-8 border-2 border-green-400">
       <img class="max-w-lg w-full border-4 border-pink-400" src="image-a.jpg" />
     </image-lightbox>
   </div>
@@ -42,24 +43,6 @@
   </div>
 
 
-  <!--
-       <image-lightbox
-       page-img="{{pic.url}}"
-       lightbox-image="{{pic.url}}"
-       alt="{{pic.alt ?? pic.title}}"
-       class="w-full sm:w-52 float-left mr-4 mb-4 border-2 border-cyan-900">
-       </image-lightbox>
-
-       <image-lightbox
-       src="{{pic.url}}"
-       lightbox-class="">
-       <img class="w-full sm:w-52 float-left mr-4 mb-4 border-2 border-cyan-900"
-       data-lightbox="{{pic.url}}"
-       src="{{pic.url}}"
-       alt="{{pic.alt ?? pic.title}}" />
-       </image-lightbox>
-  -->
-
-  <script src="lightbox.js"></script>
+  <script src="../lightbox.js"></script>
 </body>
 </html>

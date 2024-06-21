@@ -84,6 +84,10 @@ customElements.define(
         return
       }
 
+      // const shadow = this.attachShadow({ mode: "open" });
+      // shadow.appendChild(this.thumbnail_image)
+
+
       let src = this.getAttribute('src')
       if(! src){
         src = this.thumbnail_image.src
