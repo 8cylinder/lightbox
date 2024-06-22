@@ -37,7 +37,7 @@ default_template.innerHTML = `
     *{
       box-sizing: border-box;
     }
-    .lightbox-container{
+    .container{
       display: none;
       place-content: center;
       cursor: zoom-out;
@@ -57,20 +57,20 @@ default_template.innerHTML = `
         background-color: white;
       }
     }
-    .lightbox-showing{
+    .showing{
       opacity: 1;
     }
   </style>
   <slot></slot>
-  <div class="lightbox-container">
-    <img class="lightbox-image">
+  <div class="container">
+    <img class="image">
   </div>
   <!-- /lightbox template -->
-`;
+`
 
 
 customElements.define(
-  'image-lightbox',
+  'lc-lightbox',
   class extends HTMLElement {
     static observedAttributes = ['src', 'min-width', 'disabled', 'debug']
     min_width = 640
@@ -109,13 +109,13 @@ customElements.define(
       else{
         shadow.appendChild(default_template.content.cloneNode(true))
       }
-      const lightbox = shadow.querySelector('.lightbox-container')
+      const lightbox = shadow.querySelector('.container')
 
       let src = this.getAttribute('src')
       if(! src){
         src = this.thumbnail_image.src
       }
-      const lightbox_image = lightbox.querySelector('.lightbox-image')
+      const lightbox_image = lightbox.querySelector('.image')
       lightbox_image.src = src
 
       let direction = 'open'
@@ -125,13 +125,13 @@ customElements.define(
 
         // if setTimeout is not used, the transition does not fire.
         setTimeout(() => {
-          lightbox.classList.add('lightbox-showing')
+          lightbox.classList.add('showing')
           direction = 'open'
         }, 10);
       })
 
       lightbox.addEventListener('click', ()=>{
-        lightbox.classList.remove('lightbox-showing')
+        lightbox.classList.remove('showing')
         direction = 'close'
       })
 

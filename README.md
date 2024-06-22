@@ -1,17 +1,17 @@
 
-# 📺 `<image-lightbox>`
+# 🥕 Low-cal Lightbox
 
 A simple lightbox for a single image.  To use, wrap your image tag
-with `<image-lightbox></image-lightbox>` tags.  Now you can click the
+with `<lc-lightbox></lc-lightbox>` tags.  Now you can click the
 image to get a lightbox view of that image.
 
 With no attributes, the image src will be used for the lightbox
 image.
 
 ```html
-<image-lightbox>
+<lc-lightbox>
   <img src="somewhere/over/the/rainbow.jpg">
-</image-lightbox>
+</lc-lightbox>
 ```
 
 Optional attributes are:
@@ -33,7 +33,7 @@ The default is 640px.
 </dd>
 
 <dt><code>disabled</code></dt>
-<dd>If any value is used, the image-lightbox will be disabled.</dd>
+<dd>If any value is used, the lc-lightbox will be disabled.</dd>
 
 <dt><code>debug="templates"</code></dt>
 <dd>This will output rendered templates.</dd>
@@ -41,9 +41,9 @@ The default is 640px.
 
 
 ```html
-<image-lightbox src="a/bigger/image.jpg" min-width="300" disabled="1" debug="templates">
+<lc-lightbox src="a/bigger/image.jpg" min-width="300" disabled="1" debug="templates">
   <img src="somewhere/over/the/rainbow.jpg">
-</image-lightbox>
+</lc-lightbox>
 ```
 
 If futher customization needs to be done, add a `<template>` to the
