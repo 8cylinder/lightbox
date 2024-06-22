@@ -45,12 +45,12 @@
 
 
 
-    <template id="xlow-cal-template">
+    <template id="low-cal-template">
       <style>
         *{
           box-sizing: border-box;
         }
-        .lightbox-container{
+        .container{
           display: none;
           place-content: center;
           cursor: zoom-out;
@@ -70,7 +70,7 @@
             background-color: white;
           }
         }
-        .lightbox-showing{
+        .showing{
           opacity: 1;
         }
         img{
@@ -78,8 +78,8 @@
         }
       </style>
       <slot></slot>
-      <div class="lightbox-container">
-        <img class="lightbox-image">
+      <div class="container">
+        <img class="image">
       </div>
     </template>
 

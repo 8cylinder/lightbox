@@ -54,12 +54,12 @@ This example is the the same as the default one, except it adds a
 white border around the lightbox image.
 
 ```css
-<template id="lightbox-template">
+<template id="low-cal-template">
   <style>
     *{
       box-sizing: border-box;
     }
-    .lightbox-container{
+    .container{
       display: none;
       place-content: center;
       cursor: zoom-out;
@@ -79,7 +79,7 @@ white border around the lightbox image.
         background-color: white;
       }
     }
-    .lightbox-showing{
+    .showing{
       opacity: 1;
     }
     img{
@@ -87,8 +87,8 @@ white border around the lightbox image.
     }
   </style>
   <slot></slot>
-  <div class="lightbox-container">
-    <img class="lightbox-image">
+  <div class="container">
+    <img class="image">
   </div>
 </template>
 ```

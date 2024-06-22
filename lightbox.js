@@ -101,7 +101,7 @@ customElements.define(
       }
 
       const shadow = this.attachShadow({ mode: "open" });
-      const custom_template = document.querySelector('template#lightbox-template')
+      const custom_template = document.querySelector('template#low-cal-template')
       if(custom_template){
         const template_content = custom_template.content
         shadow.appendChild(template_content.cloneNode(true))
