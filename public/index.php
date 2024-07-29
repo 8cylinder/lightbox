@@ -73,7 +73,7 @@
     <?php endfor; ?>
 
 
-    <template id="xlow-cal-template">
+    <template id="low-cal-template">
       <style>
         *{
           box-sizing: border-box;
