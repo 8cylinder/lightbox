@@ -3,6 +3,9 @@
  *
  * Usage:
  *
+ * The image-lightbox element will use its own template unless a template
+ * exists with the id 'low-cal-template'.
+ *
  * With no attributes, the image src will be used for the lightbox
  * image.
  *
@@ -50,6 +53,7 @@ default_template.innerHTML = `
       padding: 2rem;
       opacity: 0;
       transition: opacity 0.3s;
+      z-index: 99999;
       & img{
         max-height: 100%;
         max-width: 100%;
