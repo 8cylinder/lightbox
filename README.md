@@ -46,11 +46,11 @@ The default is 640px.
 </lc-lightbox>
 ```
 
-If futher customization needs to be done, add a `<template>` to the
+If further customization needs to be done, add a `<template>` to the
 document and give it an id of `lightbox-template`.  This will override
 the default one.  It should be added before the script tag.
 
-This example is the the same as the default one, except it adds a
+This example is the same as the default one, except it adds a
 white border around the lightbox image.
 
 ```css
