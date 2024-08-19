@@ -1,0 +1,24 @@
+{
+  "name": "lc-lightbox",
+  "version": "1.0.0",
+  "description": "A lightbox component using the dialog HTML element",
+  "main": "src/lc-lightbox.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/8cylinder/lightbox.git"
+  },
+  "keywords": [
+    "lightbox",
+    "dialog",
+    "web-component"
+  ],
+  "author": "Sheldon McGrandle <developer@8cylinder.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/8cylinder/lightbox/issues"
+  },
+  "homepage": "https://github.com/8cylinder/lclightbox#readme"
+}
