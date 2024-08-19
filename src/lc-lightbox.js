@@ -40,6 +40,10 @@ default_template.innerHTML = `
     :host{
       --image-border-width: 1rem;
       --dialog-padding: 1rem;
+      overflow: hidden;
+    }
+    body{
+      overflow: hidden;
     }
     *{
       box-sizing: border-box;
@@ -116,10 +120,14 @@ class LCLightbox extends HTMLElement {
 
     this.thumbnail_image.addEventListener('click', ()=>{
       lightbox.showModal()
+      this.dataset.lcOpen = 'open'
     })
 
     lightbox.addEventListener('click', ()=>{
       lightbox.close()
+      // this.removeAttribute('open')
+      this.dataset.lcOpen = ''
+      delete this.dataset.lcOpen
     })
 
     if(this.DEBUG == 'templates'){

@@ -19,7 +19,7 @@
           align-items: center;
           justify-content: center;
           z-index: 9999;
-          position: fixed;
+          position: sticky;
           width: 100%;
           top: 0;
       }
@@ -83,7 +83,8 @@
       <div>
         <lc-lightbox <?= $attribute ?>>
           <img class="max-w-lg w-full border-4 border-pink-400"
-               src="<?= $image ?>"/>
+               src="<?= $image ?>"
+               alt=""/>
         </lc-lightbox>
         <div><?= $attribute ?></div>
         <!-- <div><?= implode(' | ', $raw_attribute); ?></div> -->
@@ -131,7 +132,7 @@
   </style>
   <slot></slot>
   <div class="container">
-    <img class="image">
+    <img class="image" alt="">
   </div>
 </template>
 
