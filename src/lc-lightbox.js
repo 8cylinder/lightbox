@@ -65,6 +65,25 @@ default_template.innerHTML = `
         max-width: 100%;
         background-color: white;
     }
+    dialog, ::backdrop {
+      transition: 
+        display 0.5s allow-discrete, 
+        overlay 0.5s allow-discrete,
+        opacity 0.5s;
+      opacity: 0;
+    }
+    /* IN */
+    [open], [open]::backdrop {
+      opacity: 1;
+    }
+    
+    /* OUT */
+    @starting-style {
+      [open], [open]::backdrop {
+        opacity: 0;
+      }
+    }
+    
   </style>
   <slot></slot>
   <dialog class="container">

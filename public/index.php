@@ -50,6 +50,7 @@
         'src="::pop_image::"',
         'src="::pop_image::"',
         'disable-under=""',
+        'debug="templates"',
         '',
         '',
         '',
@@ -94,46 +95,62 @@
 
 </div>
 <!-- If a template with an id of low-cal-template exists, it will be used -->
-<template id="xlow-cal-template">
+<template id="XXXXlow-cal-template">
+  <!-- lightbox template -->
   <style>
-      * {
-          box-sizing: border-box;
-      }
+    :host{
+      --image-border-width: 1rem;
+      --dialog-padding: 1rem;
+      overflow: hidden;
+    }
+    body{
+      overflow: hidden;
+    }
+    *{
+      box-sizing: border-box;
+    }
+    dialog:focus-visible{
+      outline: none;
+    }
+    dialog::backdrop {
+      background-color: rgba(0, 0, 0, 0.9);
+    }
+    dialog {
+      cursor: zoom-out;
+      padding: var(--image-border-width);
+      border: none;
+      margin: auto;
+    }
+    img {
+        max-height:  calc(100vh - var(--image-border-width) - 60px);
+        max-width: 100%;
+        background-color: white;
+    }
+    dialog, ::backdrop {
+      transition:
+        display 10s allow-discrete,
+        overlay 10s allow-discrete,
+        opacity 10s;
+      opacity: 0;
+    }
+    /* IN */
+    [open], [open]::backdrop {
+      opacity: 1;
+    }
 
-      .container {
-          display: none;
-          place-content: center;
-          cursor: zoom-out;
-          position: fixed;
-          top: 0;
-          left: 0;
-          height: 100dvh;
-          width: 100%;
-          background-color: rgba(0, 0, 0, 0.9);
-          padding: 2rem;
-          opacity: 0;
-          transition: opacity 0.3s;
-          z-index: 99999;
-          & img {
-              max-height: 100%;
-              max-width: 100%;
-              margin: auto;
-              background-color: white;
-          }
+    /* OUT */
+    @starting-style {
+      [open], [open]::backdrop {
+        opacity: 0;
       }
+    }
 
-      .showing {
-          opacity: 1;
-      }
-
-      img {
-          border: 10px solid white;
-      }
   </style>
   <slot></slot>
-  <div class="container">
-    <img class="image" alt="">
-  </div>
+  <dialog class="container">
+    <img class="image">
+  </dialog>
+  <!-- /lightbox template -->
 </template>
 
 <script src="lc-lightbox.js"></script>
