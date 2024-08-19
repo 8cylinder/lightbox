@@ -37,38 +37,35 @@ const default_template = document.createElement('template');
 default_template.innerHTML = `
   <!-- lightbox template -->
   <style>
+    :host{
+      --image-border-width: 1rem;
+      --dialog-padding: 1rem;
+    }
     *{
       box-sizing: border-box;
     }
-    .container{
-      display: none;
-      place-content: center;
-      cursor: zoom-out;
-      position: fixed;
-      top: 0;
-      left: 0;
-      height: 100dvh;
-      width: 100%;
-      background-color: rgba(0, 0, 0, 0.9);
-      padding: 2rem;
-      opacity: 0;
-      transition: opacity 0.3s;
-      z-index: 99999;
-      & img{
-        max-height: 100%;
-        max-width: 100%;
-        margin: auto;
-        background-color: white;
-      }
+    dialog:focus-visible{
+      outline: none;
     }
-    .showing{
-      opacity: 1;
+    dialog::backdrop {
+      background-color: rgba(0, 0, 0, 0.9);
+    }
+    dialog {
+      cursor: zoom-out;
+      padding: var(--image-border-width);
+      border: none;
+      margin: auto;
+    }
+    img {
+        max-height:  calc(100vh - var(--image-border-width) - 60px);
+        max-width: 100%;
+        background-color: white;
     }
   </style>
   <slot></slot>
-  <div class="container">
+  <dialog class="container">
     <img class="image">
-  </div>
+  </dialog>
   <!-- /lightbox template -->
 `
 
@@ -81,13 +78,11 @@ class LCLightbox extends HTMLElement {
 
     const DISABLED = this.getAttribute('disabled')
     this.DISABLED = DISABLED
-    const MIN_WIDTH = this.getAttribute('min-width') || this.min_width
-    this.MIN_WIDTH = MIN_WIDTH
+    this.MIN_WIDTH = this.getAttribute('min-width') || this.min_width
     if(DISABLED || window.innerWidth < this.MIN_WIDTH){
       return
     }
-    const DEBUG = this.getAttribute('debug')
-    this.DEBUG = DEBUG
+    this.DEBUG = this.getAttribute('debug')
 
     const thumbnail_image = this.querySelector('img')
     thumbnail_image.style.cursor = 'zoom-in'
@@ -119,27 +114,12 @@ class LCLightbox extends HTMLElement {
     const lightbox_image = lightbox.querySelector('.image')
     lightbox_image.src = src
 
-    let direction = 'open'
-
     this.thumbnail_image.addEventListener('click', ()=>{
-      lightbox.style.display = 'grid'
-
-      // if setTimeout is not used, the transition does not fire.
-      setTimeout(() => {
-        lightbox.classList.add('showing')
-        direction = 'open'
-      }, 10);
+      lightbox.showModal()
     })
 
     lightbox.addEventListener('click', ()=>{
-      lightbox.classList.remove('showing')
-      direction = 'close'
-    })
-
-    lightbox.addEventListener('transitionend', ()=>{
-      if(direction == 'close'){
-        lightbox.style.display = 'none'
-      }
+      lightbox.close()
     })
 
     if(this.DEBUG == 'templates'){
