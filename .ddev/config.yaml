@@ -13,6 +13,13 @@ use_dns_when_possible: true
 composer_version: "2"
 web_environment: []
 corepack_enable: false
+hooks:
+    post-start:
+        # - composer: install --no-interaction --no-progress --optimize-autoloader
+        # - exec: npm clean-install
+        # - exec: npm run dev
+        - exec: sudo echo 'PS1="\n${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\] \[\033[01;34m\]\w\[\033[00m\]\n\$ "' >> $HOME/.bashrc
+        - exec: sudo echo 'alias ll="ls -laF --group-directories-first --color=always"' >>$HOME/.bashrc
 
 # Key features of DDEV's config.yaml:
 
