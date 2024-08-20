@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A lightbox component using the dialog HTML element",
   "main": "src/lc-lightbox.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

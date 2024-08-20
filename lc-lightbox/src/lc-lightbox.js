@@ -92,7 +92,7 @@ default_template.innerHTML = `
   <!-- /lightbox template -->
 `
 
-class LCLightbox extends HTMLElement {
+export class LCLightbox extends HTMLElement {
   static observedAttributes = ['src', 'min-width', 'disabled', 'debug']
   min_width = 640
 
@@ -149,7 +149,7 @@ class LCLightbox extends HTMLElement {
       delete this.dataset.lcOpen
     })
 
-    if(this.DEBUG == 'templates'){
+    if(this.DEBUG === 'templates'){
       try{
         console.log('Using a custom template\n\n', custom_template.outerHTML)
       }
@@ -160,4 +160,5 @@ class LCLightbox extends HTMLElement {
     }
   }
 }
+
 customElements.define('lc-lightbox', LCLightbox)

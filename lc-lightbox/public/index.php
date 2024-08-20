@@ -144,7 +144,6 @@
         opacity: 0;
       }
     }
-
   </style>
   <slot></slot>
   <dialog class="container">
@@ -153,6 +152,10 @@
   <!-- /lightbox template -->
 </template>
 
-<script src="lc-lightbox.js"></script>
+<script type="module">
+  import { LCLightbox } from './lc-lightbox.js';
+</script>
+
+<!-- <script src="lc-lightbox.js"></script>-->
 </body>
 </html>
