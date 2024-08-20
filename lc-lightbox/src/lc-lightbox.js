@@ -93,6 +93,7 @@ default_template.innerHTML = `
 `
 
 export class LCLightbox extends HTMLElement {
+  // noinspection JSUnusedGlobalSymbols
   static observedAttributes = ['src', 'min-width', 'disabled', 'debug']
   min_width = 640
 
@@ -114,6 +115,7 @@ export class LCLightbox extends HTMLElement {
     this.thumbnail_image = thumbnail_image
   }
 
+  // noinspection JSUnusedGlobalSymbols
   connectedCallback(){
     if(this.DISABLED || window.innerWidth < this.MIN_WIDTH){
       return
@@ -144,7 +146,6 @@ export class LCLightbox extends HTMLElement {
 
     lightbox.addEventListener('click', ()=>{
       lightbox.close()
-      // this.removeAttribute('open')
       this.dataset.lcOpen = ''
       delete this.dataset.lcOpen
     })
