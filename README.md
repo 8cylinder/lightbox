@@ -93,4 +93,10 @@ white border around the lightbox image.
 </template>
 ```
 
+## Dev
+
+- `npm run build`
+- `npm pack lc-lightbox/` - The trailing slash is required.
+
+
 Images from https://unsplash.com
