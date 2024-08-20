@@ -97,6 +97,8 @@ white border around the lightbox image.
 
 - `npm run build`
 - `npm pack lc-lightbox/` - The trailing slash is required.
+- `npm login`
+- `npm publish lc-lightbox`
 
 
 Images from https://unsplash.com
