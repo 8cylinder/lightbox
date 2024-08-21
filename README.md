@@ -14,30 +14,32 @@ image.
 </lc-lightbox>
 ```
 
+### Attributes
+
 Optional attributes are:
 
-<dl>
+#### `src`
 
-<dt><code>src</code></dt>
-<dd>
 An alternative image to use for the lightbox image.  Mostly
 so a larger image can be used for the lightbox images.
-</dd>
 
-<dt><code>min-width</code></dt>
-<dd>
-<p>The min width the lightbox will work.  This is so it is disabled
-for mobile where this isn't necessary.</p>
+#### `min-width`
+
+The min width the lightbox will work. This is so it is disabled 
+for mobile where this isn't necessary.
+
+Note this is set when the page loads, so if the window is resized the
+behavior may not be as expected.
 
 The default is 640px.
-</dd>
 
-<dt><code>disabled</code></dt>
-<dd>If any value is used, the lc-lightbox will be disabled.</dd>
+#### `disabled`
 
-<dt><code>debug="templates"</code></dt>
-<dd>This will output rendered templates.</dd>
-</dl>
+If any value is used, the lc-lightbox will be disabled.
+
+#### `debug="templates"`  
+
+This will output rendered templates.
 
 
 ```html
@@ -46,59 +48,30 @@ The default is 640px.
 </lc-lightbox>
 ```
 
+### Custom template
+
 If further customization needs to be done, add a `<template>` to the
-document and give it an id of `lightbox-template`.  This will override
+document and give it an id of `low-cal-template`.  This will override
 the default one.  It should be added before the script tag.
 
-This example is the same as the default one, except it adds a
-white border around the lightbox image.
+You can get the default template by adding `debug="templates"` to the
+lc-lightbox tag.  This will output the rendered templates to the 
+console, which you can copy and paste into the html file.
 
-```css
-<template id="low-cal-template">
-  <style>
-    *{
-      box-sizing: border-box;
-    }
-    .container{
-      display: none;
-      place-content: center;
-      cursor: zoom-out;
-      position: fixed;
-      top: 0;
-      left: 0;
-      height: 100dvh;
-      width: 100%;
-      background-color: rgba(0, 0, 0, 0.9);
-      padding: 2rem;
-      opacity: 0;
-      transition: opacity 0.3s;
-      & img{
-        max-height: 100%;
-        max-width: 100%;
-        margin: auto;
-        background-color: white;
-      }
-    }
-    .showing{
-      opacity: 1;
-    }
-    img{
-      border: 10px solid white;
-    }
-  </style>
-  <slot></slot>
-  <div class="container">
-    <img class="image">
-  </div>
-</template>
-```
+### Data attribute
+
+When the lightbox is shown, the tag will have a `data-lc-open="open"`
+attribute.  For example, this can be used in css to add an 
+`overflow: clip` to to the body to prevent scrolling.
 
 ## Dev
 
 - `npm run build`
-- `npm pack lc-lightbox/` - The trailing slash is required.
+- `npm pack lc-lightbox/` – The trailing slash is required.
 - `npm login`
 - `npm publish lc-lightbox`
 
+
+--------------------------------------
 
 Images from https://unsplash.com
