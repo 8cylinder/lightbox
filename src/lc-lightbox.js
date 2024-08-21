@@ -1,37 +1,3 @@
-/* <image-lightbox>
- *
- *
- * Usage:
- *
- * The image-lightbox element will use its own template unless a template
- * exists with the id 'low-cal-template'.
- *
- * With no attributes, the image src will be used for the lightbox
- * image.
- *
- *   <image-lightbox>
- *     <img src="somewhere/over/the/rainbow.jpg">
- *   </image-lightbox>
- *
- *
- * Optional attributes are:
- *
- *   src:
- *    An alternative image to use for the lightbox image.  Mostly
- *    so a larger image can be used for the lightbox images.
- *
- *   min-width (default 640):
- *    the min width the lightbox will work.  This is so it is disabled
- *    for mobile where this isn't necessary.
- *
- *   disabled:
- *    if any value is used, the image-lightbox will be disabled.
- *
- *   <image-lightbox src="a/bigger/image.jpg" min-width="300" disabled="disabled">
- *     <img src="somewhere/over/the/rainbow.jpg">
- *   </image-lightbox>
- *
- */
 
 const default_template = document.createElement('template');
 default_template.innerHTML = `
