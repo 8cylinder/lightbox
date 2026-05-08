@@ -56,40 +56,30 @@ default_template.innerHTML = `
 `
 
 export class LCLightbox extends HTMLElement {
-  // noinspection JSUnusedGlobalSymbols
-  static observedAttributes = ['src', 'min-width', 'disabled', 'debug']
   min_width = 640
 
   constructor(){
     super()
+  }
 
-    const DISABLED = this.getAttribute('disabled')
-    this.DISABLED = DISABLED
-    this.MIN_WIDTH = Number(this.getAttribute('min-width')) || this.min_width
-    if(DISABLED || window.innerWidth < this.MIN_WIDTH){
+  connectedCallback(){
+    const disabled = this.getAttribute('disabled')
+    const min_width = Number(this.getAttribute('min-width')) || this.min_width
+    if(disabled || window.innerWidth < min_width){
       return
     }
-    this.DEBUG = this.getAttribute('debug')
 
     const thumbnail_image = this.querySelector('img')
     if(!thumbnail_image){
       return
     }
     thumbnail_image.style.cursor = 'zoom-in'
-    this.thumbnail_image = thumbnail_image
-  }
 
-  // noinspection JSUnusedGlobalSymbols
-  connectedCallback(){
-    if(this.DISABLED || window.innerWidth < this.MIN_WIDTH || !this.thumbnail_image){
-      return
-    }
-
-    const shadow = this.attachShadow({ mode: "open" });
+    const shadow = this.shadowRoot || this.attachShadow({ mode: "open" })
+    shadow.innerHTML = ''
     const custom_template = document.querySelector('template#low-cal-template')
     if(custom_template){
-      const template_content = custom_template.content
-      shadow.appendChild(template_content.cloneNode(true))
+      shadow.appendChild(custom_template.content.cloneNode(true))
     }
     else{
       shadow.appendChild(default_template.content.cloneNode(true))
@@ -98,23 +88,29 @@ export class LCLightbox extends HTMLElement {
 
     let src = this.getAttribute('src')
     if(!src){
-      src = this.thumbnail_image.src
+      src = thumbnail_image.src
     }
     const lightbox_image = lightbox.querySelector('.image')
     lightbox_image.src = src
+    lightbox_image.alt = thumbnail_image.alt || ''
 
-    this.thumbnail_image.addEventListener('click', ()=>{
+    this._onThumbnailClick = ()=>{
       lightbox.showModal()
       this.dataset.lcOpen = 'open'
-    })
-
-    lightbox.addEventListener('click', ()=>{
+    }
+    this._onLightboxClick = ()=>{
       lightbox.close()
-      this.dataset.lcOpen = ''
       delete this.dataset.lcOpen
-    })
+    }
 
-    if(this.DEBUG === 'templates'){
+    thumbnail_image.addEventListener('click', this._onThumbnailClick)
+    lightbox.addEventListener('click', this._onLightboxClick)
+
+    this._thumbnail_image = thumbnail_image
+    this._lightbox = lightbox
+
+    const debug = this.getAttribute('debug')
+    if(debug === 'templates'){
       if(custom_template){
         console.log('Using a custom template\n\n', custom_template.outerHTML)
       }
@@ -122,6 +118,15 @@ export class LCLightbox extends HTMLElement {
         console.log('Using the default template\n\n', default_template.outerHTML)
       }
       console.log('Lightbox html\n\n', lightbox.outerHTML)
+    }
+  }
+
+  disconnectedCallback(){
+    if(this._thumbnail_image){
+      this._thumbnail_image.removeEventListener('click', this._onThumbnailClick)
+    }
+    if(this._lightbox){
+      this._lightbox.removeEventListener('click', this._onLightboxClick)
     }
   }
 }
