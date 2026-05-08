@@ -8,9 +8,6 @@ default_template.innerHTML = `
       --dialog-padding: 1rem;
       overflow: hidden;
     }
-    body{
-      overflow: hidden;
-    }
     *{
       box-sizing: border-box;
     }
@@ -64,26 +61,27 @@ export class LCLightbox extends HTMLElement {
   min_width = 640
 
   constructor(){
-    self = super()
+    super()
 
     const DISABLED = this.getAttribute('disabled')
     this.DISABLED = DISABLED
-    this.MIN_WIDTH = this.getAttribute('min-width') || this.min_width
+    this.MIN_WIDTH = Number(this.getAttribute('min-width')) || this.min_width
     if(DISABLED || window.innerWidth < this.MIN_WIDTH){
       return
     }
     this.DEBUG = this.getAttribute('debug')
 
     const thumbnail_image = this.querySelector('img')
+    if(!thumbnail_image){
+      return
+    }
     thumbnail_image.style.cursor = 'zoom-in'
-    // set the cursor here so that disabled lightboxes don't get a
-    // zoom cursor
     this.thumbnail_image = thumbnail_image
   }
 
   // noinspection JSUnusedGlobalSymbols
   connectedCallback(){
-    if(this.DISABLED || window.innerWidth < this.MIN_WIDTH){
+    if(this.DISABLED || window.innerWidth < this.MIN_WIDTH || !this.thumbnail_image){
       return
     }
 
@@ -99,7 +97,7 @@ export class LCLightbox extends HTMLElement {
     const lightbox = shadow.querySelector('.container')
 
     let src = this.getAttribute('src')
-    if(! src){
+    if(!src){
       src = this.thumbnail_image.src
     }
     const lightbox_image = lightbox.querySelector('.image')
@@ -117,10 +115,10 @@ export class LCLightbox extends HTMLElement {
     })
 
     if(this.DEBUG === 'templates'){
-      try{
+      if(custom_template){
         console.log('Using a custom template\n\n', custom_template.outerHTML)
       }
-      catch{
+      else{
         console.log('Using the default template\n\n', default_template.outerHTML)
       }
       console.log('Lightbox html\n\n', lightbox.outerHTML)
