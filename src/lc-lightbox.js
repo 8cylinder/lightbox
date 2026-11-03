@@ -91,15 +91,19 @@ export class LCLightbox extends HTMLElement {
       return
     }
 
-    let src = this.getAttribute('src')
-    if(!src){
-      // currentSrc is the source actually chosen from srcset/<picture>
-      src = thumbnail_image.currentSrc || thumbnail_image.src
-    }
-    lightbox_image.src = src
     lightbox_image.alt = thumbnail_image.alt || ''
 
     this._onThumbnailClick = ()=>{
+      // Set the src on first open so full size images aren't downloaded
+      // until they are needed
+      if(!lightbox_image.getAttribute('src')){
+        let src = this.getAttribute('src')
+        if(!src){
+          // currentSrc is the source actually chosen from srcset/<picture>
+          src = thumbnail_image.currentSrc || thumbnail_image.src
+        }
+        lightbox_image.src = src
+      }
       lightbox.showModal()
       this.dataset.lcOpen = 'open'
     }

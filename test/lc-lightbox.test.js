@@ -105,6 +105,23 @@ describe('min-width attribute', ()=>{
   })
 })
 
+describe('lightbox image loading', ()=>{
+  test('src is not set until the lightbox is opened', ()=>{
+    const el = mount(`<lc-lightbox src="big.jpg">${IMG}</lc-lightbox>`)
+    const lightbox_image = el.shadowRoot.querySelector('.image')
+    assert.equal(lightbox_image.getAttribute('src'), null)
+    el.querySelector('img').click()
+    assert.equal(lightbox_image.getAttribute('src'), 'big.jpg')
+  })
+
+  test('falls back to the thumbnail src', ()=>{
+    const el = mount(`<lc-lightbox>${IMG}</lc-lightbox>`)
+    el.querySelector('img').click()
+    const lightbox_image = el.shadowRoot.querySelector('.image')
+    assert.equal(lightbox_image.src, el.querySelector('img').src)
+  })
+})
+
 describe('package.json', ()=>{
   const pkg = JSON.parse(readFileSync(new URL('../package.json', import.meta.url)))
 
