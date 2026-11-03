@@ -5,6 +5,9 @@ A simple lightbox for a single image.  To use, wrap your image tag
 with `<lc-lightbox></lc-lightbox>` tags.  Now you can click the
 image to get a lightbox view of that image.
 
+The thumbnail is keyboard accessible: it can be focused with Tab and
+opened with Enter or Space, and Esc closes the lightbox.
+
 With no attributes, the image src will be used for the lightbox
 image.
 

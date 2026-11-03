@@ -122,6 +122,38 @@ describe('lightbox image loading', ()=>{
   })
 })
 
+describe('accessibility', ()=>{
+  test('thumbnail is a focusable button when enabled', ()=>{
+    const el = mount(`<lc-lightbox>${IMG}</lc-lightbox>`)
+    const thumbnail = el.querySelector('img')
+    assert.equal(thumbnail.getAttribute('tabindex'), '0')
+    assert.equal(thumbnail.getAttribute('role'), 'button')
+  })
+
+  test('thumbnail is left alone when disabled', ()=>{
+    const el = mount(`<lc-lightbox disabled>${IMG}</lc-lightbox>`)
+    const thumbnail = el.querySelector('img')
+    assert.equal(thumbnail.getAttribute('tabindex'), null)
+    assert.equal(thumbnail.getAttribute('role'), null)
+  })
+
+  for(const key of ['Enter', ' ']){
+    test(`pressing ${JSON.stringify(key)} on the thumbnail opens the lightbox`, ()=>{
+      const el = mount(`<lc-lightbox>${IMG}</lc-lightbox>`)
+      const event = new KeyboardEvent('keydown', { key, cancelable: true })
+      el.querySelector('img').dispatchEvent(event)
+      assert.equal(el.shadowRoot.querySelector('dialog').open, true)
+      assert.equal(event.defaultPrevented, true)
+    })
+  }
+
+  test('dialog is labelled with the thumbnail alt', ()=>{
+    const el = mount(`<lc-lightbox>${IMG}</lc-lightbox>`)
+    const dialog = el.shadowRoot.querySelector('dialog')
+    assert.equal(dialog.getAttribute('aria-label'), 'a thumbnail')
+  })
+})
+
 describe('package.json', ()=>{
   const pkg = JSON.parse(readFileSync(new URL('../package.json', import.meta.url)))
 

@@ -92,6 +92,9 @@ export class LCLightbox extends HTMLElement {
     }
 
     lightbox_image.alt = thumbnail_image.alt || ''
+    lightbox.setAttribute('aria-label', thumbnail_image.alt || 'Image')
+    thumbnail_image.tabIndex = 0
+    thumbnail_image.setAttribute('role', 'button')
 
     this._onThumbnailClick = ()=>{
       // Set the src on first open so full size images aren't downloaded
@@ -107,6 +110,12 @@ export class LCLightbox extends HTMLElement {
       lightbox.showModal()
       this.dataset.lcOpen = 'open'
     }
+    this._onThumbnailKeydown = (event)=>{
+      if(event.key === 'Enter' || event.key === ' '){
+        event.preventDefault()
+        this._onThumbnailClick()
+      }
+    }
     this._onLightboxClick = ()=>{
       lightbox.close()
     }
@@ -116,6 +125,7 @@ export class LCLightbox extends HTMLElement {
     }
 
     thumbnail_image.addEventListener('click', this._onThumbnailClick)
+    thumbnail_image.addEventListener('keydown', this._onThumbnailKeydown)
     lightbox.addEventListener('click', this._onLightboxClick)
     lightbox.addEventListener('close', this._onLightboxClose)
 
@@ -137,6 +147,7 @@ export class LCLightbox extends HTMLElement {
   disconnectedCallback(){
     if(this._thumbnail_image){
       this._thumbnail_image.removeEventListener('click', this._onThumbnailClick)
+      this._thumbnail_image.removeEventListener('keydown', this._onThumbnailKeydown)
     }
     if(this._lightbox){
       this._lightbox.removeEventListener('click', this._onLightboxClick)
