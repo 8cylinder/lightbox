@@ -2,12 +2,16 @@
   "name": "lc-lightbox",
   "version": "0.9.2",
   "description": "A lightbox component using the dialog HTML element",
-  "main": "src/lc-lightbox.js",
+  "main": "lc-lightbox.js",
   "type": "module",
   "exports": "./lc-lightbox.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node --test",
     "build": "src/build.bash"
+  },
+  "devDependencies": {
+    "@happy-dom/global-registrator": "^21.0.4",
+    "happy-dom": "^21.0.4"
   },
   "repository": {
     "type": "git",
@@ -23,5 +27,5 @@
   "bugs": {
     "url": "https://github.com/8cylinder/lightbox/issues"
   },
-  "homepage": "https://github.com/8cylinder/lclightbox#readme"
+  "homepage": "https://github.com/8cylinder/lightbox#readme"
 }

@@ -35,7 +35,8 @@ The default is 640px.
 
 #### `disabled`
 
-If any value is used, the lc-lightbox will be disabled.
+If the attribute is present, with or without a value
+(e.g. `<lc-lightbox disabled>`), the lc-lightbox will be disabled.
 
 #### `debug="templates"`  
 

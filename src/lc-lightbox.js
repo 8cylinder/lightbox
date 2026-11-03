@@ -63,8 +63,14 @@ export class LCLightbox extends HTMLElement {
   }
 
   connectedCallback(){
-    const disabled = this.getAttribute('disabled')
-    const min_width = Number(this.getAttribute('min-width')) || this.min_width
+    const disabled = this.hasAttribute('disabled')
+    let min_width = this.min_width
+    if(this.hasAttribute('min-width')){
+      const attr_min_width = Number(this.getAttribute('min-width'))
+      if(Number.isFinite(attr_min_width)){
+        min_width = attr_min_width
+      }
+    }
     if(disabled || window.innerWidth < min_width){
       return
     }
@@ -85,12 +91,16 @@ export class LCLightbox extends HTMLElement {
       shadow.appendChild(default_template.content.cloneNode(true))
     }
     const lightbox = shadow.querySelector('.container')
+    const lightbox_image = lightbox?.querySelector('.image')
+    if(!lightbox || !lightbox_image){
+      console.error('lc-lightbox: template must contain a dialog with class "container" and an img with class "image"')
+      return
+    }
 
     let src = this.getAttribute('src')
     if(!src){
       src = thumbnail_image.src
     }
-    const lightbox_image = lightbox.querySelector('.image')
     lightbox_image.src = src
     lightbox_image.alt = thumbnail_image.alt || ''
 
@@ -100,11 +110,15 @@ export class LCLightbox extends HTMLElement {
     }
     this._onLightboxClick = ()=>{
       lightbox.close()
+    }
+    // Fires for any close, including the Esc key
+    this._onLightboxClose = ()=>{
       delete this.dataset.lcOpen
     }
 
     thumbnail_image.addEventListener('click', this._onThumbnailClick)
     lightbox.addEventListener('click', this._onLightboxClick)
+    lightbox.addEventListener('close', this._onLightboxClose)
 
     this._thumbnail_image = thumbnail_image
     this._lightbox = lightbox
@@ -127,8 +141,12 @@ export class LCLightbox extends HTMLElement {
     }
     if(this._lightbox){
       this._lightbox.removeEventListener('click', this._onLightboxClick)
+      this._lightbox.removeEventListener('close', this._onLightboxClose)
     }
+    delete this.dataset.lcOpen
   }
 }
 
-customElements.define('lc-lightbox', LCLightbox)
+if(!customElements.get('lc-lightbox')){
+  customElements.define('lc-lightbox', LCLightbox)
+}
