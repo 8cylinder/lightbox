@@ -29,7 +29,8 @@ The entire component is a single file: `src/lc-lightbox.js` (~150 lines).
   `<dialog>` for the fullscreen view
 - **Template system**: Users can override the default template by providing
   `<template id="low-cal-template">` in the document
-- **CSS custom properties**: `--image-border-width` and `--dialog-padding`
+- **CSS custom properties**: `--image-border-width` (default `1rem`, set via
+  `var()` fallback so it inherits from the page)
 - **Observed attributes**: `src`, `min-width`, `disabled`, `debug`
 
 The build is just file copying (no transpilation or bundling). The component is

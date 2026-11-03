@@ -3,10 +3,6 @@ const default_template = document.createElement('template');
 default_template.innerHTML = `
   <!-- lightbox template -->
   <style>
-    :host{
-      --image-border-width: 1rem;
-      --dialog-padding: 1rem;
-    }
     *{
       box-sizing: border-box;
     }
@@ -18,12 +14,12 @@ default_template.innerHTML = `
     }
     dialog {
       cursor: zoom-out;
-      padding: var(--image-border-width);
+      padding: var(--image-border-width, 1rem);
       border: none;
       margin: auto;
     }
     img {
-        max-height:  calc(100vh - var(--image-border-width) - 60px);
+        max-height:  calc(100vh - var(--image-border-width, 1rem) - 60px);
         max-width: 100%;
         background-color: white;
     }

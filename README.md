@@ -49,6 +49,12 @@ This will output rendered templates.
 </lc-lightbox>
 ```
 
+### CSS custom properties
+
+`--image-border-width` sets the white border around the lightbox
+image (default `1rem`).  It can be set on the `lc-lightbox` tag or on
+any ancestor, e.g. `:root { --image-border-width: 0; }`.
+
 ### Custom template
 
 If further customization needs to be done, add a `<template>` to the
