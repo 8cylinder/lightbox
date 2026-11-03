@@ -28,19 +28,20 @@ default_template.innerHTML = `
         max-width: 100%;
         background-color: white;
     }
+    /* Closed state, and what it fades out to */
     dialog, ::backdrop {
-      transition: 
-        display 0.5s allow-discrete, 
+      transition:
+        display 0.5s allow-discrete,
         overlay 0.5s allow-discrete,
         opacity 0.5s;
       opacity: 0;
     }
-    /* IN */
+    /* Open state */
     [open], [open]::backdrop {
       opacity: 1;
     }
-    
-    /* OUT */
+
+    /* Where the fade in starts from */
     @starting-style {
       [open], [open]::backdrop {
         opacity: 0;
