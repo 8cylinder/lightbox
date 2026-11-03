@@ -58,10 +58,6 @@ default_template.innerHTML = `
 export class LCLightbox extends HTMLElement {
   min_width = 640
 
-  constructor(){
-    super()
-  }
-
   connectedCallback(){
     const disabled = this.hasAttribute('disabled')
     let min_width = this.min_width
