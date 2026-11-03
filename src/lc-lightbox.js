@@ -6,7 +6,6 @@ default_template.innerHTML = `
     :host{
       --image-border-width: 1rem;
       --dialog-padding: 1rem;
-      overflow: hidden;
     }
     *{
       box-sizing: border-box;
