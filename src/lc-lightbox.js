@@ -93,7 +93,8 @@ export class LCLightbox extends HTMLElement {
 
     let src = this.getAttribute('src')
     if(!src){
-      src = thumbnail_image.src
+      // currentSrc is the source actually chosen from srcset/<picture>
+      src = thumbnail_image.currentSrc || thumbnail_image.src
     }
     lightbox_image.src = src
     lightbox_image.alt = thumbnail_image.alt || ''
