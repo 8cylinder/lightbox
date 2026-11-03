@@ -154,6 +154,50 @@ describe('accessibility', ()=>{
   })
 })
 
+describe('attribute changes', ()=>{
+  test('adding disabled after mount disables the lightbox', ()=>{
+    const el = mount(`<lc-lightbox>${IMG}</lc-lightbox>`)
+    const thumbnail = el.querySelector('img')
+    thumbnail.click()
+    el.setAttribute('disabled', '')
+    assert.equal(el.shadowRoot.querySelector('dialog'), null)
+    assert.equal(el.dataset.lcOpen, undefined)
+    assert.equal(thumbnail.getAttribute('tabindex'), null)
+    assert.equal(thumbnail.style.cursor, '')
+    // The thumbnail is still slotted so it stays visible
+    assert.ok(el.shadowRoot.querySelector('slot'))
+    assert.equal(thumbnail.parentElement, el)
+  })
+
+  test('removing disabled after mount enables the lightbox', ()=>{
+    const el = mount(`<lc-lightbox disabled>${IMG}</lc-lightbox>`)
+    assertDisabled(el)
+    el.removeAttribute('disabled')
+    assertEnabled(el)
+    el.querySelector('img').click()
+    assert.equal(el.shadowRoot.querySelector('dialog').open, true)
+  })
+
+  test('changing src is used the next time the lightbox opens', ()=>{
+    const el = mount(`<lc-lightbox src="one.jpg">${IMG}</lc-lightbox>`)
+    el.querySelector('img').click()
+    el.setAttribute('src', 'two.jpg')
+    el.querySelector('img').click()
+    const lightbox_image = el.shadowRoot.querySelector('.image')
+    assert.equal(lightbox_image.getAttribute('src'), 'two.jpg')
+  })
+
+  test('repeated attribute changes leave a single working dialog', ()=>{
+    const el = mount(`<lc-lightbox>${IMG}</lc-lightbox>`)
+    el.setAttribute('src', 'two.jpg')
+    el.setAttribute('src', 'three.jpg')
+    el.querySelector('img').click()
+    const dialogs = el.shadowRoot.querySelectorAll('dialog')
+    assert.equal(dialogs.length, 1)
+    assert.equal(dialogs[0].open, true)
+  })
+})
+
 describe('package.json', ()=>{
   const pkg = JSON.parse(readFileSync(new URL('../package.json', import.meta.url)))
 

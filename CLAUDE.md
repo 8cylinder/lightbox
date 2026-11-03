@@ -50,4 +50,5 @@ published as-is.
 - No external dependencies — keep it that way
 - The component uses `@starting-style` for CSS fade transitions
 - Mobile handling: component disables itself when viewport < `min-width`
-  (default 640px), checked only at page load
+  (default 640px), checked on connect and on attribute changes, not on
+  resize

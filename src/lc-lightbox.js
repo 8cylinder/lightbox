@@ -55,8 +55,28 @@ default_template.innerHTML = `
 
 export class LCLightbox extends HTMLElement {
   min_width = 640
+  static observedAttributes = ['src', 'min-width', 'disabled', 'debug']
 
   connectedCallback(){
+    this._initialized = true
+    this._setup()
+  }
+
+  disconnectedCallback(){
+    this._teardown()
+  }
+
+  attributeChangedCallback(name, old_value, new_value){
+    // Skip the calls made while upgrading, before connectedCallback has run
+    if(!this._initialized || !this.isConnected || old_value === new_value){
+      return
+    }
+    this._setup()
+  }
+
+  _setup(){
+    this._teardown()
+
     const disabled = this.hasAttribute('disabled')
     let min_width = this.min_width
     if(this.hasAttribute('min-width')){
@@ -73,7 +93,6 @@ export class LCLightbox extends HTMLElement {
     if(!thumbnail_image){
       return
     }
-    thumbnail_image.style.cursor = 'zoom-in'
 
     const shadow = this.shadowRoot || this.attachShadow({ mode: "open" })
     shadow.innerHTML = ''
@@ -93,6 +112,7 @@ export class LCLightbox extends HTMLElement {
 
     lightbox_image.alt = thumbnail_image.alt || ''
     lightbox.setAttribute('aria-label', thumbnail_image.alt || 'Image')
+    thumbnail_image.style.cursor = 'zoom-in'
     thumbnail_image.tabIndex = 0
     thumbnail_image.setAttribute('role', 'button')
 
@@ -144,14 +164,24 @@ export class LCLightbox extends HTMLElement {
     }
   }
 
-  disconnectedCallback(){
+  // Undo everything _setup() did, leaving just the thumbnail
+  _teardown(){
     if(this._thumbnail_image){
       this._thumbnail_image.removeEventListener('click', this._onThumbnailClick)
       this._thumbnail_image.removeEventListener('keydown', this._onThumbnailKeydown)
+      this._thumbnail_image.style.cursor = ''
+      this._thumbnail_image.removeAttribute('tabindex')
+      this._thumbnail_image.removeAttribute('role')
+      this._thumbnail_image = null
     }
     if(this._lightbox){
       this._lightbox.removeEventListener('click', this._onLightboxClick)
       this._lightbox.removeEventListener('close', this._onLightboxClose)
+      this._lightbox.close()
+      this._lightbox = null
+    }
+    if(this.shadowRoot){
+      this.shadowRoot.innerHTML = '<slot></slot>'
     }
     delete this.dataset.lcOpen
   }

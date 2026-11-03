@@ -19,7 +19,9 @@ image.
 
 ### Attributes
 
-Optional attributes are:
+Optional attributes are listed below.  They can also be changed at
+runtime (e.g. `el.setAttribute('disabled', '')`) and the lightbox will
+update.
 
 #### `src`
 
@@ -31,8 +33,9 @@ so a larger image can be used for the lightbox images.
 The min width the lightbox will work. This is so it is disabled 
 for mobile where this isn't necessary.
 
-Note this is set when the page loads, so if the window is resized the
-behavior may not be as expected.
+Note this is checked when the page loads (and when an attribute
+changes), not when the window is resized, so if the window is resized
+the behavior may not be as expected.
 
 The default is 640px.
 
