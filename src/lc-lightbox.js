@@ -19,7 +19,9 @@ default_template.innerHTML = `
       margin: auto;
     }
     img {
-        max-height:  calc(100vh - var(--image-border-width, 1rem) - 60px);
+        display: block;
+        /* Fit inside the UA dialog max-height (100% - 2em - 6px) and its padding */
+        max-height: calc(100dvh - 2 * var(--image-border-width, 1rem) - 2em - 6px);
         max-width: 100%;
         background-color: white;
     }
